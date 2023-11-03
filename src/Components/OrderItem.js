@@ -3,10 +3,10 @@ import axios from 'axios';
 import './OrderItem.css';
 
 class OrderItem extends React.Component {
-  handleStatusChange = async (status) => {
+  handleStatusChange = async (status, numero_transacao) => {
     try {
-      await axios.put(`http://localhost:3001/api/orders/${this.props.order.id}/status`, { status });
-      this.props.onStatusChange(this.props.order.id, status);
+      await axios.put(`http://localhost:3000/api/orders/${numero_transacao}`, { status: status });
+      this.props.onStatusChange(numero_transacao, status);
     } catch (error) {
       console.error('Erro ao atualizar o status do pedido', error);
     }
@@ -23,7 +23,7 @@ class OrderItem extends React.Component {
       case 'Cancelado':
         return '#FF0000';
       default:
-        return '#FFFFFF';
+        return '#000000';
     }
   };
 
@@ -31,22 +31,22 @@ class OrderItem extends React.Component {
     const { order } = this.props;
     return (
       <li className="order-item" style={{ backgroundColor: this.getStatusColor(order.status) }}>
-        <div>Número do Pedido: {order.id}</div>
+        <div>Pedido: #{order.numero_transacao}</div>
         <div>
           Itens:
           <ul>
-            {order.items.map(item => (
+            {order.items && order.items.map(item => (
               <li key={item.id}>
-                {item.name} - Quantidade: {item.quantity}
+                {item.nome} - Quantidade: {item.quantidade}
               </li>
             ))}
           </ul>
         </div>
         <div>Status: {order.status}</div>
-        <button onClick={() => this.handleStatusChange('Pendente')}>Pendente</button>
-        <button onClick={() => this.handleStatusChange('Em Preparo')}>Em Preparo</button>
-        <button onClick={() => this.handleStatusChange('Finalizado')}>Finalizado</button>
-        <button onClick={() => this.handleStatusChange('Cancelado')}>Cancelado</button>
+        <button onClick={() => this.handleStatusChange('Pendente', order.numero_transacao)}>Pendente</button>
+        <button onClick={() => this.handleStatusChange('Em Preparo', order.numero_transacao)}>Em Preparo</button>
+        <button onClick={() => this.handleStatusChange('Finalizado', order.numero_transacao)}>Finalizado</button>
+        <button onClick={() => this.handleStatusChange('Cancelado', order.numero_transacao)}>Cancelado</button>
       </li>
     );
   }

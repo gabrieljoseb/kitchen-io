@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import OrdersList from './Components/OrdersList';
-import orders from './data/data';
 
 class App extends Component {
   state = {
-    orders: orders
+    orders: []
   }
 
   componentDidMount() {
@@ -14,10 +13,15 @@ class App extends Component {
 
   fetchOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/orders');
-      this.setState({ orders: response.data });
+      const response = await axios.get('http://localhost:3000/api/orders');
+      const ordersWithItems = await Promise.all(response.data.map(async order => {
+        const itemsResponse = await axios.get(`http://localhost:3000/api/orders_itens/${order.numero_transacao}`);
+        order.items = itemsResponse.data;
+        return order;
+      }));
+      this.setState({ orders: ordersWithItems });
     } catch (error) {
-      console.error('Error fetching orders', error);
+      console.error('Error fetching orders or items', error);
     }
   }
 

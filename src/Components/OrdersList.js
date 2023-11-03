@@ -11,7 +11,7 @@ class OrdersList extends React.Component {
         <h1>Pedidos</h1>
         <ul className="orders-list">
           {orders.map(order => (
-            <OrderItem key={order.id} order={order} onStatusChange={onStatusChange} />
+            <OrderItem key={order.numero_transacao} order={order} onStatusChange={onStatusChange} />
           ))}
         </ul>
       </div>
