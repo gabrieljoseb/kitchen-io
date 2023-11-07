@@ -5,7 +5,7 @@ import './OrderItem.css';
 class OrderItem extends React.Component {
   handleStatusChange = async (status, numero_transacao) => {
     try {
-      await axios.put(`http://localhost:3000/api/orders/${numero_transacao}`, { status: status });
+      await axios.put(process.env.REACT_APP_API_ENDPOINT_URL + `/api/orders/${numero_transacao}`, { status: status });
       this.props.onStatusChange(numero_transacao, status);
     } catch (error) {
       console.error('Erro ao atualizar o status do pedido', error);
