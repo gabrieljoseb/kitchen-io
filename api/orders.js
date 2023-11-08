@@ -18,17 +18,6 @@ module.exports = async (req, res) => {
                 res.json(result.rows[0]);
                 break;
 
-            // case 'PUT':
-            //     const updateResult = await client.query('UPDATE pedidos SET status = $1 WHERE numero_transacao = $2',
-            //         [status, numero_transacao]);
-
-            //     if (updateResult.rows.length > 0) {
-            //         res.json(updateResult.rows[0]);
-            //     } else {
-            //         res.status(404).send('Order not found');
-            //     }
-            //     break;
-
             case 'DELETE':
                 await client.query('DELETE FROM pedidos WHERE numero_transacao = $1', [numero_transacao]);
                 res.status(204).send();
