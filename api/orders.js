@@ -2,9 +2,11 @@ import pool from './database.js';
 
 module.exports = async (req, res) => {
     const client = await pool.connect();
+    console.log('client: ' + JSON.parse(client));
 
     try {
         const { nome_cliente, status, numero_transacao } = req.body;
+        console.log('req.body: ' + JSON.parse(req.body));
 
         switch (req.method) {
             case 'GET':
