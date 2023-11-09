@@ -14,7 +14,7 @@ class App extends Component {
   fetchOrders = async () => {
     try {
       const response = await axios.get('/api/orders');
-      console.log('response: ' + JSON.parse(response));
+      console.log('response: ' + response);
       const ordersWithItems = await Promise.all(response.data.map(async order => {
         const itemsResponse = await axios.get(`/api/orders_itens/${order.numero_transacao}`);
         order.items = itemsResponse.data;
