@@ -2,7 +2,6 @@ import pg from 'pg';
 
 const { Pool } = pg;
 
-console.log('iniciando pool: ' + process.env.POSTGRES_URL);
 const pool = new Pool({
   connectionString: process.env.POSTGRES_URL + "?sslmode=require",
 })
