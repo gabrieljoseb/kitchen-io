@@ -9,7 +9,6 @@ module.exports = async (req, res) => {
         switch (req.method) {
             case 'GET':
                 console.log('Iniciando rota get');
-                console.log('req.body: ' + JSON.parse(req.body));
                 const { rows } = await client.query('SELECT * FROM pedidos ORDER BY 1 DESC');
                 res.json(rows);
                 break;
