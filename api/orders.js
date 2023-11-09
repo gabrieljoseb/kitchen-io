@@ -2,11 +2,11 @@ import pool from './database.js';
 
 module.exports = async (req, res) => {
     const client = await pool.connect();
-    console.log('client: ' + client);
+    console.log('client: ' + JSON.stringify(client));
+    console.log('req.body: ' + JSON.parse(req.body));
 
     try {
         const { nome_cliente, status, numero_transacao } = req.body;
-        console.log('req.body: ' + JSON.parse(req.body));
 
         switch (req.method) {
             case 'GET':
@@ -32,6 +32,7 @@ module.exports = async (req, res) => {
                 res.status(405).end(`Method ${req.method} Not Allowed`);
         }
     } catch (err) {
+        console.log('API error: ' + err)
         res.status(500).send('Internal Server Error');
     } finally {
         client.release();
