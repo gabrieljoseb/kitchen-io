@@ -15,15 +15,15 @@ class OrderItem extends React.Component {
   getStatusColor = (status) => {
     switch (status) {
       case 'Pendente':
-        return '#FFA500';
+        return '#FFBC80'; // Pastel orange
       case 'Em Preparo':
-        return '#FFFF00';
+        return '#FFFDA1'; // Pastel yellow
       case 'Finalizado':
-        return '#32CD32';
+        return '#98FB98'; // Pastel green
       case 'Cancelado':
-        return '#FF0000';
+        return '#FF6B6B'; // Pastel red
       default:
-        return '#000000';
+        return '#D3D3D3'; // Light gray for default or unknown status
     }
   };
 
