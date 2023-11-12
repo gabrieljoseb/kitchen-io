@@ -42,7 +42,7 @@ class OrderItem extends React.Component {
             ))}
           </ul>
         </div>
-        <div>Status: {order.status}</div>
+        <div className='status'>Status: {order.status}</div>
         <div className="button-container">
           <button onClick={() => this.handleStatusChange('Pendente', order.numero_transacao)}>Pendente</button>
           <button onClick={() => this.handleStatusChange('Em Preparo', order.numero_transacao)}>Em Preparo</button>
