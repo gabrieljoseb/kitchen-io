@@ -8,8 +8,16 @@
     align-items: flex-start;
   }
   
-  .order-item div {
+  .order-item div
+  .button-container {
     margin-bottom: 10px;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; /* Alinha os botões para a esquerda */
+    flex-wrap: wrap; /* Permite que os botões passem para a próxima linha se não couberem na linha atual */
   }
   
   button {
