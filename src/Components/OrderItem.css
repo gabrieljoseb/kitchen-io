@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    color: #333;
   }
   
   .order-item div
@@ -31,6 +32,11 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    color: #333; /* Cor do texto mais escura para melhor contraste */
+    font-weight: bold; /* Torna o texto em negrito */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Adiciona sombra ao texto para melhorar a legibilidade */
+    background-color: #f8f8f8; /* Cor de fundo claro para alto contraste */
+    border: 1px solid #ccc; /* Adiciona contorno ao botão para definição */
   }
   
   button:hover {
