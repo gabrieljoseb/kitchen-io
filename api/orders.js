@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
     try {
         switch (req.method) {
             case 'GET':
-                const { rows } = await client.query('SELECT * FROM pedidos ORDER BY 1 DESC');
+                const { rows } = await client.query('SELECT * FROM pedidos ORDER BY data_criacao DESC');
                 res.json(rows);
                 break;
 
