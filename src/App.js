@@ -33,7 +33,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Kitchen IO</h1>
         <OrdersList orders={this.state.orders} onStatusChange={this.handleStatusChange} />
       </div>
     );
