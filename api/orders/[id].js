@@ -8,6 +8,14 @@ module.exports = async (req, res) => {
         const status = req.body.status;
 
         switch (req.method) {
+            case 'GET':
+                const { rows } = await client.query('SELECT * FROM pedidos WHERE numero_transacao = $1', [numero_transacao]);
+                if (rows.length > 0) {
+                    res.json(rows);
+                } else {
+                    res.status(404).send('Item not found');
+                }
+                break;
             case 'PUT':
                 const updateResult = await client.query('UPDATE pedidos SET status = $1 WHERE numero_transacao = $2 RETURNING *',
                     [status, numero_transacao]);

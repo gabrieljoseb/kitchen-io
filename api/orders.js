@@ -11,8 +11,8 @@ module.exports = async (req, res) => {
                 break;
 
             case 'POST':
-                const result = await client.query('INSERT INTO pedidos (numero_transacao, nome_cliente, status) VALUES ($1, $2, $3)',
-                    [req.body.numero_transacao, req.body.nome_cliente, req.body.status]);
+                const result = await client.query('INSERT INTO pedidos (numero_transacao, nome_cliente, status, mesa_id, email) VALUES ($1, $2, $3, $4, $5)',
+                    [req.body.numero_transacao, req.body.nome_cliente, req.body.status, req.body.mesa_id, req.body.email]);
                 res.json(result.rows[0]);
                 break;
 
