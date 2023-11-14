@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
                 break;
 
             default:
-                res.setHeader('Allow', ['PUT']);
+                res.setHeader('Allow', ['GET', 'PUT']);
                 res.status(405).end(`Method ${req.method} Not Allowed`);
         }
     } catch (err) {
