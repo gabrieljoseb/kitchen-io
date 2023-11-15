@@ -13,21 +13,48 @@ class App extends Component {
 
   fetchOrders = async () => {
     try {
-      const response = await axios.get('/api/orders');
-      const ordersWithItems = await Promise.all(response.data.map(async order => {
-        const itemsResponse = await axios.get(`/api/orders_itens/${order.numero_transacao}`);
-        order.items = itemsResponse.data;
-        return order;
+      // Obter os pedidos
+      const ordersResponse = await axios.get('/api/orders');
+      const orders = ordersResponse.data;
+
+      // Obter os itens dos pedidos
+      const itemsPromises = orders.map(order =>
+        axios.get(`/api/orders_itens/${order.numero_transacao}`)
+      );
+      const itemsResponses = await Promise.all(itemsPromises);
+
+      // Associar itens aos pedidos
+      const ordersWithItems = orders.map((order, index) => ({
+        ...order,
+        items: itemsResponses[index].data,
       }));
-      this.setState({ orders: ordersWithItems });
+
+      // Obter detalhes do cliente para cada pedido
+      const clientDetailsPromises = ordersWithItems.map(order =>
+        axios.get(`https://cardap-io.vercel.app/api/client/${order.external_reference}`)
+      );
+      const clientDetailsResponses = await Promise.all(clientDetailsPromises);
+
+      // Associar detalhes do cliente aos pedidos
+      const ordersWithItemsAndClients = ordersWithItems.map((order, index) => ({
+        ...order,
+        cliente: clientDetailsResponses[index].data,
+      }));
+
+      this.setState({ orders: ordersWithItemsAndClients });
     } catch (error) {
-      console.error('Error when fetching orders', error);
-      throw error;
+      console.error('Erro ao buscar pedidos:', error);
     }
   }
 
-  handleStatusChange = () => {
-    this.fetchOrders();
+  handleStatusChange = (numero_transacao, novoStatus) => {
+    this.setState(prevState => ({
+      orders: prevState.orders.map(order =>
+        order.numero_transacao === numero_transacao
+          ? { ...order, status: novoStatus }
+          : order
+      )
+    }));
   }
 
   render() {

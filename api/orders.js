@@ -11,18 +11,13 @@ module.exports = async (req, res) => {
                 break;
 
             case 'POST':
-                const result = await client.query('INSERT INTO pedidos (numero_transacao, nome_cliente, status, mesa_id, email) VALUES ($1, $2, $3, $4, $5)',
-                    [req.body.numero_transacao, req.body.nome_cliente, req.body.status, req.body.mesa_id, req.body.email]);
+                const result = await client.query('INSERT INTO pedidos (numero_transacao, external_reference, status) VALUES ($1, $2, $3)',
+                    [req.body.numero_transacao, req.body.external_reference, req.body.status]);
                 res.json(result.rows[0]);
                 break;
 
-            case 'DELETE':
-                await client.query('DELETE FROM pedidos WHERE numero_transacao = $1', [req.body.numero_transacao]);
-                res.status(204).send();
-                break;
-
             default:
-                res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
+                res.setHeader('Allow', ['GET', 'POST']);
                 res.status(405).end(`Method ${req.method} Not Allowed`);
         }
     } catch (err) {
