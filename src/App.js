@@ -31,7 +31,7 @@ class App extends Component {
 
       // Obter detalhes do cliente para cada pedido
       const clientDetailsPromises = ordersWithItems.map(order =>
-        axios.get(`https://cardap-io.vercel.app/api/client/${order.external_reference}`)
+        axios.get(`/api/client/${order.external_reference}`)
       );
       const clientDetailsResponses = await Promise.all(clientDetailsPromises);
 
